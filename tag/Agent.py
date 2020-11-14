@@ -1,5 +1,5 @@
 import numpy as np
-from Head import Head
+from Brain import Brain
 import Parameters as p 
 
 class Agent():
@@ -10,7 +10,7 @@ class Agent():
 
         #Think_center init
         self.brain_spec = brain_spec
-        self.head = Head(brain_spec)
+        self.brain = Brain(brain_spec)
   
     def agent_reset(self):
 
@@ -23,6 +23,7 @@ class Agent():
         self.score = 0
         self.alive = True
         self.memory = []
+        self.team = 1
 
         #Characteristics
         self.fov = p.FOV
@@ -44,13 +45,16 @@ class Agent():
         self.score += reward
 
     def think(self,world_input):
-        return(self.head.think(world_input))
+        return(self.brain.think(world_input))
     
     def mutate(self):
-        self.head.mutate()
+        self.brain.mutate()
     
     def die(self):
         self.alive = False
+    
+    def tag(self):
+        self.team *= -1
     
     def remember(self,world_input):
         if self.memory:
