@@ -26,8 +26,6 @@ class Agent():
 
         #Characteristics
         self.fov = p.FOV
-        
-
 
     def moove(self,action):
         self.acceleration = action
