@@ -52,7 +52,6 @@ class Agent():
     def die(self):
         self.alive = False
     
-    
     def remember(self,world_input):
         if self.memory:
             memory[-1][1] = score - memory[-1][1] #If the score is higher, this is good 
