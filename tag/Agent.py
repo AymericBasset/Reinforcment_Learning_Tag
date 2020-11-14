@@ -27,20 +27,20 @@ class Agent():
         #Characteristics
         self.fov = p.FOV
 
+    def update(self,world_input,reward):
+        #add more maybe later
+        action = np.argmax(self.think(world_input))
+        self.moove(p.ACTION_DIC[action])
+        self.add_reward(reward)
+        self.remember(world_input)
+
     def moove(self,action):
         self.acceleration = action
         self.velocity += self.acceleration
         self.pos += self.velocity
         self.velocity *=  p.FRICTION_COEF
     
-    def update(self,world_input,reward):
-        #add more maybe later
-        action = np.argmax(self.think(world_input))
-        self.moove(p.ACTION_DIC[action])
-        self.update_score(reward)
-        self.learn(world_input)
-    
-    def update_score(self, reward):
+    def add_reward(self, reward):
         self.score += reward
 
     def think(self,world_input):
@@ -54,8 +54,8 @@ class Agent():
     
     def remember(self,world_input):
         if self.memory:
-            memory[-1][1] = score - memory[-1][1] #If the score is higher, this is good 
-        memory.append([world_input,self.score])
+            self.memory[-1][1] = self.score
+        self.memory.append([world_input,self.score])
 
 if __name__ == "__main__":
     agent = Agent(p.BRAIN_SPEC)
